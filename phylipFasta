@@ -69,7 +69,7 @@ end
 # is a fasta file DNA?
 def isDNA?(fasta)
    seq = File.read(fasta, 10000).split("\n").grep(/^[^>]/).join
-   seq.count("AGTCN").to_f / seq.length > 0.90
+   seq.count("AGTCNU-").to_f / seq.length > 0.90
 end
 
 # provide aliased fasta name so programs like PHYLIP don't get confused by long names

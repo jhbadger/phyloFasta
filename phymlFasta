@@ -62,7 +62,7 @@ end
 # is a fasta file DNA?
 def isDNA?(fasta)
    seq = File.read(fasta, 10000).split("\n").grep(/^[^>]/).join
-   seq.count("AGTCN").to_f / seq.length > 0.90
+   seq.upcase.count("-AGTCN").to_f / seq.length > 0.90
 end
 
 # provide aliased fasta name so programs like PHYLIP don't get confused by long names
@@ -150,7 +150,7 @@ opts.input.each do |fasta|
   if (opts.bootstrap > 0)
     boot = "-b #{opts.bootstrap}"
   else
-    boot = "-b -1"
+    boot = "-b -4"
   end
   system("cd #{tmpdir};phyml --no_memory_check -d #{data} -m #{model} #{boot} -i #{tname}.phy")
   tree = NewickTree.fromFile("#{tmpdir}/#{name}.phy_phyml_tree.txt")
